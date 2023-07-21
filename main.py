@@ -1,1 +1,4 @@
-print("Hello, world! 3")
+import sys
+
+
+print(f"{sys.argv=}") 
