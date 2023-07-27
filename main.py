@@ -9,6 +9,10 @@ for i in range(1, 6):
   with open(f"test{i}.txt", "w") as fo:
     print(i, file=fo)
 
+for i in range(1, 6):
+  with open(f"script{i}.json", "w") as fo:
+    print(i, file=fo)
+
 os.mkdir("inner")
 os.chdir("inner")
 for i in range(6, 11):
