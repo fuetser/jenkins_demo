@@ -1,9 +1,7 @@
 import time
 
 
-data = []
+num = 1
 while True:
-    with open("/dev/urandom", "rb") as fi:
-        chunck = fi.read(1024)
-        data.append(chunck)
+    num += 1
     time.sleep(0.5)
