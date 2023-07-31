@@ -1,11 +1,22 @@
-a = []
+import time
+import random
 
+def consume_cpu():
+    # Perform some CPU-intensive operation
+    for _ in range(10000000):
+        random.random()
 
-def fib(n):
-    if n <= 2:
-        return 1
-    a.append(n)
-    return fib(n - 1) + fib(n - 2)
+def consume_memory():
+    # Allocate memory and hold it for some time
+    memory_hog = ['Hog'] * (1024 * 1024 * 1024)  # Allocating 100 MB
+    time.sleep(5)  # Hold memory for 5 seconds
+    del memory_hog
 
+def main():
+    while True:
+        consume_cpu()
+        consume_memory()
+        time.sleep(2)
 
-fib(1000)
+if __name__ == "__main__":
+    main()
