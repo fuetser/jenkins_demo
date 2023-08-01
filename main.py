@@ -15,8 +15,6 @@ def consume_memory():
     memory_hog = []
     for i in range(10**6):
         memory_hog.extend(["hog"] * 100)
-        if i % 100000 > 0:
-            time.sleep(0.25)
 
 def main():
     index = 0
