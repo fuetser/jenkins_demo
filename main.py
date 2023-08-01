@@ -4,7 +4,7 @@ import os
 
 def consume_cpu():
     # Perform some CPU-intensive operation
-    for _ in range(10**random.randint(2, 7)):
+    for _ in range(int(10**random.randint(2, 6) * 1.5)):
         random.random()
 
 def consume_memory():
@@ -13,10 +13,10 @@ def consume_memory():
     # time.sleep(5)  # Hold memory for 5 seconds
     # del memory_hog
     memory_hog = []
-    for i in range(10**7):
+    for i in range(10**6):
         memory_hog.extend(["hog"] * 100)
     time.sleep(5)
-    for i in range(10**7):
+    for i in range(10**6):
         memory_hog.pop()
 
 def main():
@@ -27,7 +27,7 @@ def main():
         with open(f"text{index}.txt", "w") as fo:
             for i in range(10**5):
                 fo.write("Hello, world!")
-        if index > 100:
+        if index > 10:
             os.system("rm *.txt")
         index += 1
         time.sleep(2)
