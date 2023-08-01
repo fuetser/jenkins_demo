@@ -20,14 +20,14 @@ def consume_memory():
         memory_hog.pop()
 
 def main():
-    index = 0
+    index = 1
     while True:
         consume_cpu()
         consume_memory()
         with open(f"text{index}.txt", "w") as fo:
             for i in range(10**5):
                 fo.write("Hello, world!")
-        if index > 10:
+        if index % 15 == 0:
             os.system("rm *.txt")
         index += 1
         time.sleep(2)
