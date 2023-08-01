@@ -4,7 +4,7 @@ import os
 
 def consume_cpu():
     # Perform some CPU-intensive operation
-    for _ in range(1000000):
+    for _ in range(10**random.randint(2, 7)):
         random.random()
 
 def consume_memory():
@@ -13,8 +13,11 @@ def consume_memory():
     # time.sleep(5)  # Hold memory for 5 seconds
     # del memory_hog
     memory_hog = []
-    for i in range(10**6):
+    for i in range(10**7):
         memory_hog.extend(["hog"] * 100)
+    time.sleep(5)
+    for i in range(10**7)
+        memory_hog.pop()
 
 def main():
     index = 0
