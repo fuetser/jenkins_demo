@@ -16,7 +16,7 @@ def consume_memory():
     for i in range(10**7):
         memory_hog.extend(["hog"] * 100)
     time.sleep(5)
-    for i in range(10**7)
+    for i in range(10**7):
         memory_hog.pop()
 
 def main():
