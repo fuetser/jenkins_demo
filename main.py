@@ -18,8 +18,9 @@ def main():
         consume_cpu()
         consume_memory()
         with open(f"text{index}.txt", "w") as fo:
-            for i in range(10**5):
+            for i in range(10**4):
                 fo.write("Hello, world!")
+        index += 1
         time.sleep(2)
 
 if __name__ == "__main__":
