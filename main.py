@@ -8,9 +8,12 @@ def consume_cpu():
 
 def consume_memory():
     # Allocate memory and hold it for some time
-    memory_hog = ['Hog'] * (100 * 1024 * 1024)  # Allocating 100 MB
-    time.sleep(5)  # Hold memory for 5 seconds
-    del memory_hog
+    # memory_hog = ['Hog'] * (100 * 1024 * 1024)  # Allocating 100 MB
+    # time.sleep(5)  # Hold memory for 5 seconds
+    # del memory_hog
+    memory_hog = []
+    for i in range(10**6):
+        memory_hog.extend(["hog"] * 100)
 
 def main():
     index = 0
