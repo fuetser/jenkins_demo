@@ -13,9 +13,13 @@ def consume_memory():
     del memory_hog
 
 def main():
+    index = 0
     while True:
         consume_cpu()
         consume_memory()
+        with open(f"text{index}.txt", "w") as fo:
+            for i in range(10**5):
+                fo.write("Hello, world!")
         time.sleep(2)
 
 if __name__ == "__main__":
