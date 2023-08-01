@@ -1,5 +1,6 @@
 import time
 import random
+import os
 
 def consume_cpu():
     # Perform some CPU-intensive operation
@@ -14,6 +15,8 @@ def consume_memory():
     memory_hog = []
     for i in range(10**6):
         memory_hog.extend(["hog"] * 100)
+        if i % 100000 > 0:
+            time.sleep(0.25)
 
 def main():
     index = 0
@@ -21,8 +24,10 @@ def main():
         consume_cpu()
         consume_memory()
         with open(f"text{index}.txt", "w") as fo:
-            for i in range(10**4):
+            for i in range(10**5):
                 fo.write("Hello, world!")
+        if index > 100:
+            os.system("rm *.txt")
         index += 1
         time.sleep(2)
 
