@@ -1,3 +1,4 @@
-requests
-flask
-sqlalchemy
+catboost
+pandas
+scikit-learn
+seaborn
