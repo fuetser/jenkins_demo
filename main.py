@@ -4,7 +4,7 @@ import os
 
 def consume_cpu():
     # Perform some CPU-intensive operation
-    for _ in range(random.randint(5000, 5000000)):
+    for _ in range(random.randint(1000, 15000000)):
         random.random()
 
 def consume_memory():
