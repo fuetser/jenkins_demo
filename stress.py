@@ -1,41 +1,43 @@
-import subprocess
-import os
-import psutil
-import time
+import pandas as pd
+from catboost import CatBoostClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, classification_report
+import seaborn as sns
 
+# Load Titanic dataset from Seaborn
+sns.set(style="whitegrid")
+titanic = sns.load_dataset("titanic")
 
-def run_stress_test(cpu_percentage, ram_percentage, duration):
-    # Calculate the number of CPU workers to spawn based on the desired CPU percentage
-    cpu_workers = round(os.cpu_count() * cpu_percentage / 100)
+# Preprocessing (same as before)
+# Remove unnecessary columns
+titanic = titanic.drop(['alive', 'embark_town', 'who', 'adult_male'], axis=1)
+titanic['deck'].fillna('Unknown', inplace=True)
+titanic['embarked'].fillna(titanic['embarked'].mode()[0], inplace=True)
 
-    # Calculate the memory size to use based on the desired RAM percentage
-    memory_size = round(psutil.virtual_memory().total * ram_percentage / 100)
+# Convert categorical variables to numerical using one-hot encoding
+titanic = pd.get_dummies(titanic, columns=['sex', 'embarked', 'class', 'deck'], drop_first=True)
 
-    # Build the stress-ng command with desired options
-    command = [
-        'stress-ng',
-        '--cpu', str(cpu_workers),
-        '--vm', '1',
-        '--vm-bytes', f'{memory_size}K',
-        '--timeout', f'{duration}s',
-        '--metrics-brief'
-    ]
+# Split the dataset into features and target variable
+X = titanic.drop('survived', axis=1)
+y = titanic['survived']
 
-    # Start the stress-ng process in a subprocess
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    try:
-        # Wait for the specified duration
-        time.sleep(duration)
-    finally:
-        # Terminate the stress-ng process after the specified duration
-        process.terminate()
-        process.wait()
+# Initialize the CatBoost classifier (same as before)
+model = CatBoostClassifier(iterations=1000,  # Number of boosting iterations
+                           learning_rate=0.1,  # Learning rate for gradient boosting
+                           depth=6,  # Maximum depth of the tree
+                           loss_function='Logloss',  # Loss function for binary classification
+                           verbose=100)  # Print progress every 100 iterations
 
-if __name__ == "__main__":
-    # Define the desired CPU and RAM percentages, and the duration in seconds
-    cpu_percentage = 50  # Use 50% of available CPU cores
-    ram_percentage = 50  # Use 50% of available RAM
-    duration = 10        # Run the stress test for 10 seconds
+# Train the model (same as before)
+model.fit(X_train, y_train, eval_set=(X_test, y_test), early_stopping_rounds=50, verbose_eval=100)
 
-    run_stress_test(cpu_percentage, ram_percentage, duration)
+# Make predictions on the test set (same as before)
+y_pred = model.predict(X_test)
+
+# Evaluate the model (same as before)
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy: {:.2f}%".format(accuracy * 100))
+print("\nClassification Report:\n", classification_report(y_test, y_pred))
