@@ -35,7 +35,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 # Initialize the CatBoost classifier
 model = CatBoostClassifier(iterations=10000,  # Number of boosting iterations
                            learning_rate=0.1,  # Learning rate for gradient boosting
-                           depth=6,  # Maximum depth of the tree
+                           depth=12,  # Maximum depth of the tree
                            loss_function='Logloss',  # Loss function for binary classification
                            verbose=100)  # Print progress every 100 iterations
 
